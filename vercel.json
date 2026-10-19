@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/bruiloft.html", "destination": "/bruiloft-marokkaans", "permanent": true },
+    { "source": "/bruiloft", "destination": "/bruiloft-marokkaans", "permanent": true }
+  ]
+}
