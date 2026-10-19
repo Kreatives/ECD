@@ -1,0 +1,71 @@
+/* ============================================================
+   Event Center Dordrecht — Bruiloft (Marokkaanse bruiloft)
+   Only what styles.css / pages.css do not already cover.
+   ============================================================ */
+
+/* ---------- card grid variants ---------- */
+.cards--four { grid-template-columns: repeat(4, 1fr); }
+.cards--two  { grid-template-columns: repeat(2, 1fr); }
+
+/* capacity / key line inside a zaal card */
+.info-card__meta {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  margin: 0 0 1.5rem;
+}
+.cards--two .info-card .btn { align-self: flex-start; }
+
+/* "combineer de zalen" line under the zaal cards */
+.zaal-combine {
+  max-width: var(--wrap);
+  margin: clamp(2rem, 3vw, 3rem) auto 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ---------- logistieke USP's (title + line, no icons) ---------- */
+.usp-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.usp {
+  background: var(--offwhite);
+  padding: clamp(1.75rem, 2.4vw, 2.5rem);
+}
+.usp__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: var(--text-h3);
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.usp__text {
+  color: var(--muted);
+  max-width: 34ch;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+  .cards--four { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 960px) {
+  .usp-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .cards--four,
+  .cards--two { grid-template-columns: 1fr; }
+  .usp-grid { grid-template-columns: 1fr; }
+}

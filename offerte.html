@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offerte aanvragen — Event Center Dordrecht</title>
+<meta name="description" content="Vraag in een paar stappen je offerte aan voor je bruiloft, verloving of hennafeest bij Event Center Dordrecht. Liever direct contact, app ons dan.">
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://use.typekit.net/epz3xln.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allison&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/offerte.css">
+</head>
+<body data-solid-header>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="site-header" data-header>
+  <div class="site-header__inner">
+    <nav class="nav nav--left" aria-label="Hoofdmenu">
+      <a href="index.html">Home</a>
+      <div class="nav__item nav__item--dropdown">
+        <a href="bruiloft.html" aria-haspopup="true">Bruiloft<span class="nav__caret" aria-hidden="true"></span></a>
+        <div class="nav__dropdown">
+          <a href="bruiloft.html">Marokkaanse bruiloft</a>
+          <a href="bruiloft-turks.html">Turkse bruiloft</a>
+          <a href="bruiloft-afghaans.html">Afghaanse bruiloft</a>
+          <a href="bruiloft-surinaams.html">Surinaamse bruiloft</a>
+          <a href="bruiloft-henna.html">Hennafeest</a>
+        </div>
+      </div>
+      <div class="nav__item nav__item--dropdown">
+        <a href="zalen.html" aria-haspopup="true">Zalen<span class="nav__caret" aria-hidden="true"></span></a>
+        <div class="nav__dropdown">
+          <a href="zaal.html">Fortuinhof</a>
+          <a href="zaal-scheffers.html">Scheffers</a>
+          <a href="zaal-3.html">Zaal 3</a>
+        </div>
+      </div>
+      <a href="over-ons.html">Over ons</a>
+      <a href="gallerij.html">Gallerij</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <a href="index.html" class="site-header__logo" aria-label="Event Center Dordrecht">
+      <img src="assets/logo/logo.png" alt="Event Center Dordrecht">
+    </a>
+
+    <div class="nav nav--right">
+      <a href="tel:0854002424"><img class="contact-ico" src="assets/icons/telefoon.svg" alt="" aria-hidden="true">085 400 2424</a>
+      <a href="mailto:info@ecdordrecht.nl"><img class="contact-ico" src="assets/icons/mail.svg" alt="" aria-hidden="true">info@ecdordrecht.nl</a>
+    </div>
+
+    <button class="nav-toggle" data-nav-toggle aria-label="Menu openen" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ TOP (light, geen dark hero) ============ -->
+<section class="section section--paper offerte-top">
+  <div class="offerte-top__inner">
+    <p class="script-kicker offerte-top__kicker">Vraag je offerte aan</p>
+    <h1 class="page-hero__title offerte-top__title">Vraag je offerte aan</h1>
+    <p class="offerte-top__sub">Binnen 24 uur heb je een voorstel in je mailbox. Liever direct contact, dan app je ons en weet je vandaag nog of jouw datum vrij is.</p>
+    <div class="offerte-top__actions">
+      <a href="https://wa.me/31854002424" class="btn btn--dark" target="_blank" rel="noopener">App ons</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MULTI-STEP OFFERTE FORMULIER ============ -->
+<section class="section section--white offerte-form-section">
+  <div class="offerte-form-wrap">
+
+    <!-- Voortgangsbalk -->
+    <div class="offerte-progress" role="group" aria-label="Voortgang aanvraag">
+      <div class="offerte-progress__meta">
+        <span class="offerte-progress__step" data-progress-label>Stap 1 van 5</span>
+        <span class="offerte-progress__pct" data-progress-pct>20%</span>
+      </div>
+      <div class="offerte-progress__track">
+        <span class="offerte-progress__fill" data-progress-fill></span>
+      </div>
+    </div>
+
+    <form class="offerte-form" action="bedankt.html" method="get" data-offerte-form novalidate>
+
+      <!-- Stap 1 -->
+      <fieldset class="offerte-step is-active" data-step="1">
+        <legend class="offerte-step__title">Wat voor bruiloft?</legend>
+        <p class="offerte-step__intro">Kies waar jullie feest om draait, dan stemmen we het voorstel daarop af.</p>
+        <div class="tile-grid" role="radiogroup" aria-label="Wat voor bruiloft">
+          <label class="tile">
+            <input type="radio" name="type" value="Traditioneel of bruiloft" class="tile__input" required>
+            <span class="tile__body">
+              <span class="tile__title">Traditioneel of bruiloft</span>
+              <span class="tile__text">Een klassieke bruiloft met de hele familie erbij.</span>
+            </span>
+          </label>
+          <label class="tile">
+            <input type="radio" name="type" value="Verloving" class="tile__input">
+            <span class="tile__body">
+              <span class="tile__title">Verloving</span>
+              <span class="tile__text">Een sfeervolle avond waarop jullie het officieel maken.</span>
+            </span>
+          </label>
+          <label class="tile">
+            <input type="radio" name="type" value="Henna" class="tile__input">
+            <span class="tile__body">
+              <span class="tile__title">Henna</span>
+              <span class="tile__text">Een hennafeest in een eigen ruimte voor de dames.</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Stap 2 -->
+      <fieldset class="offerte-step" data-step="2">
+        <legend class="offerte-step__title">Wanneer?</legend>
+        <p class="offerte-step__intro">Weet je de datum al, vul die dan in. Twijfel je nog, kies dan de maand waar jullie aan denken.</p>
+        <div class="offerte-field-row">
+          <div class="offerte-field">
+            <label class="offerte-field__label" for="datum">Gewenste datum</label>
+            <input type="date" id="datum" name="datum" class="offerte-field__control">
+          </div>
+          <div class="offerte-field">
+            <label class="offerte-field__label" for="maand">Of een verwachte maand</label>
+            <select id="maand" name="maand" class="offerte-field__control">
+              <option value="">Kies een maand</option>
+              <option value="Januari">Januari</option>
+              <option value="Februari">Februari</option>
+              <option value="Maart">Maart</option>
+              <option value="April">April</option>
+              <option value="Mei">Mei</option>
+              <option value="Juni">Juni</option>
+              <option value="Juli">Juli</option>
+              <option value="Augustus">Augustus</option>
+              <option value="September">September</option>
+              <option value="Oktober">Oktober</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+              <option value="Weet ik nog niet">Weet ik nog niet</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Stap 3 -->
+      <fieldset class="offerte-step" data-step="3">
+        <legend class="offerte-step__title">Aantal gasten</legend>
+        <p class="offerte-step__intro">Schuif naar het aantal gasten waar jullie ongeveer op rekenen, dat mag een schatting zijn.</p>
+        <div class="offerte-range">
+          <output class="offerte-range__value" data-range-output for="gasten">250 gasten</output>
+          <input type="range" id="gasten" name="gasten" class="offerte-range__input"
+                 min="50" max="700" step="10" value="250" data-range
+                 aria-describedby="range-hint">
+          <div class="offerte-range__scale" id="range-hint">
+            <span>50</span>
+            <span>700</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Stap 4 -->
+      <fieldset class="offerte-step" data-step="4">
+        <legend class="offerte-step__title">Wat wil je erbij?</legend>
+        <p class="offerte-step__intro">Kies alles waar jullie aan denken, je kunt meerdere opties aanvinken.</p>
+        <div class="tile-grid tile-grid--two">
+          <label class="tile">
+            <input type="checkbox" name="extras" value="Catering" class="tile__input">
+            <span class="tile__body">
+              <span class="tile__title">Catering</span>
+              <span class="tile__text">Van Turks tot Marokkaans en Surinaams uit onze eigen keuken.</span>
+            </span>
+          </label>
+          <label class="tile">
+            <input type="checkbox" name="extras" value="Decoratie" class="tile__input">
+            <span class="tile__body">
+              <span class="tile__title">Decoratie</span>
+              <span class="tile__text">Bloemwanden, aankleding en sfeerverlichting op jullie thema.</span>
+            </span>
+          </label>
+          <label class="tile">
+            <input type="checkbox" name="extras" value="Effecten" class="tile__input">
+            <span class="tile__body">
+              <span class="tile__title">Effecten</span>
+              <span class="tile__text">Rook, confetti en licht voor de grote momenten op de avond.</span>
+            </span>
+          </label>
+          <label class="tile">
+            <input type="checkbox" name="extras" value="DJ of muziek" class="tile__input">
+            <span class="tile__body">
+              <span class="tile__title">DJ of muziek</span>
+              <span class="tile__text">Een DJ of live muziek die past bij jullie stijl en gasten.</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Stap 5 -->
+      <fieldset class="offerte-step" data-step="5">
+        <legend class="offerte-step__title">Laat je gegevens achter</legend>
+        <p class="offerte-step__intro">Vul je gegevens in, dan sturen we het voorstel naar je toe en nemen we contact met je op.</p>
+        <div class="offerte-field-row">
+          <div class="offerte-field">
+            <label class="offerte-field__label" for="naam">Naam</label>
+            <input type="text" id="naam" name="naam" class="offerte-field__control" autocomplete="name" required>
+          </div>
+          <div class="offerte-field">
+            <label class="offerte-field__label" for="telefoon">Telefoon</label>
+            <input type="tel" id="telefoon" name="telefoon" class="offerte-field__control" autocomplete="tel" required>
+          </div>
+        </div>
+        <div class="offerte-field">
+          <label class="offerte-field__label" for="email">E-mail</label>
+          <input type="email" id="email" name="email" class="offerte-field__control" autocomplete="email" required>
+        </div>
+        <div class="offerte-field">
+          <label class="offerte-field__label" for="opmerking">Opmerking</label>
+          <textarea id="opmerking" name="opmerking" class="offerte-field__control offerte-field__control--area" rows="4" placeholder="Vertel kort waar jullie aan denken."></textarea>
+        </div>
+      </fieldset>
+
+      <!-- Navigatie -->
+      <div class="offerte-nav">
+        <button type="button" class="btn btn--dark offerte-nav__prev" data-prev hidden>Vorige</button>
+        <button type="button" class="btn btn--solid offerte-nav__next" data-next>Volgende</button>
+        <button type="submit" class="btn btn--solid offerte-nav__submit" data-submit hidden>Verstuur</button>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<!-- ============ TRUST ============ -->
+<section class="section section--paper offerte-trust">
+  <div class="offerte-trust__inner" data-reveal>
+    <div class="offerte-trust__item">
+      <div class="rating rating--dark">
+        <span class="rating__stars" aria-hidden="true">★★★★★</span>
+        <span class="rating__score">4.9 / 5</span>
+        <span class="rating__count">Gebaseerd op 295+ reviews</span>
+      </div>
+    </div>
+    <div class="offerte-trust__item">
+      <span class="offerte-trust__num">10+ jaar</span>
+      <span class="offerte-trust__label">ervaring met bruiloften in Dordrecht</span>
+    </div>
+    <div class="offerte-trust__item">
+      <span class="offerte-trust__num">Gratis parkeren</span>
+      <span class="offerte-trust__label">voor al je gasten op ons eigen terrein</span>
+    </div>
+    <div class="offerte-trust__item offerte-trust__item--note">
+      <p class="offerte-trust__note">Je zit nergens aan vast. We maken vrijblijvend een voorstel en bespreken rustig met je wat er mogelijk is.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="site-footer__top">
+    <a href="index.html" class="site-footer__logo"><img src="assets/logo/logo.png" alt="Event Center Dordrecht"></a>
+    <nav class="site-footer__nav" aria-label="Footer menu">
+      <a href="index.html">Home</a>
+      <a href="bruiloft.html">Bruiloft</a>
+      <div class="nav__item nav__item--dropdown">
+        <a href="zalen.html" aria-haspopup="true">Zalen<span class="nav__caret" aria-hidden="true"></span></a>
+        <div class="nav__dropdown">
+          <a href="zaal.html">Fortuinhof</a>
+          <a href="zaal-scheffers.html">Scheffers</a>
+          <a href="zaal-3.html">Zaal 3</a>
+        </div>
+      </div>
+      <a href="over-ons.html">Over ons</a>
+      <a href="contact.html">Contact</a>
+      <a href="offerte.html" aria-current="page">Offerte</a>
+    </nav>
+    <div class="site-footer__contact">
+      <a href="tel:0854002424"><img class="contact-ico" src="assets/icons/telefoon.svg" alt="" aria-hidden="true">085 400 2424</a>
+      <a href="mailto:info@ecdordrecht.nl"><img class="contact-ico" src="assets/icons/mail.svg" alt="" aria-hidden="true">info@ecdordrecht.nl</a>
+    </div>
+    <div class="site-footer__social" aria-label="Volg ons op social media">
+      <a href="#" class="social-link" aria-label="Instagram"><img src="assets/icons/instagram.svg" alt=""></a>
+      <a href="#" class="social-link" aria-label="Facebook"><img src="assets/icons/facebook.svg" alt=""></a>
+      <a href="#" class="social-link" aria-label="YouTube"><img src="assets/icons/youtube.svg" alt=""></a>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <p>Event Center Dordrecht</p>
+    <p>Waar jullie mooiste dag alle ruimte en aandacht krijgt.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/offerte.js"></script>
+</body>
+</html>

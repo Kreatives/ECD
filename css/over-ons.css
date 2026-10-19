@@ -1,0 +1,11 @@
+/* ============================================================
+   Event Center Dordrecht — Over ons
+   Only tweaks not already covered by styles.css / pages.css.
+   ============================================================ */
+
+/* The intro split carries two paragraphs plus a detail photo, so let the
+   body column breathe a touch more on this page. */
+.split__body .split__text { margin-bottom: 0; }
+
+/* Keep the stat labels on a single, calm line where they can. */
+.stat__label { max-width: 20ch; margin-inline: auto; }

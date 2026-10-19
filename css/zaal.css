@@ -1,0 +1,144 @@
+/* ============================================================
+   Event Center Dordrecht — Zaal detail (Fortuinhof)
+   Builds on styles.css + pages.css. Only page-specific bits live here:
+   the capacity line under the hero title, the opstellingen tabs,
+   the "video volgt" placeholder box and the combineren band.
+   ============================================================ */
+
+/* ---------- hero capacity line ---------- */
+.zaal-hero__capacity {
+  margin-top: 1rem;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+}
+
+/* ---------- opstellingen tabs (pure CSS :checked radios) ---------- */
+.opstellingen { max-width: 920px; margin: 0 auto; }
+.opstellingen__radio { position: absolute; opacity: 0; pointer-events: none; }
+
+.opstellingen__tablist {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: clamp(2rem, 3vw, 3rem);
+  flex-wrap: wrap;
+}
+.opstellingen__tab {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 1em 2em;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background .3s ease, color .3s ease, border-color .3s ease;
+}
+.opstellingen__tab:hover { color: var(--ink); border-color: var(--ink); }
+
+/* active tab: colour + background + border, not opacity alone */
+#tab-gescheiden:checked ~ .opstellingen__tablist [for="tab-gescheiden"],
+#tab-gemengd:checked ~ .opstellingen__tablist [for="tab-gemengd"] {
+  background: var(--ink);
+  color: var(--offwhite);
+  border-color: var(--ink);
+}
+
+.opstellingen__panel { display: none; }
+#tab-gescheiden:checked ~ .opstellingen__panels .opstellingen__panel--gescheiden,
+#tab-gemengd:checked ~ .opstellingen__panels .opstellingen__panel--gemengd {
+  display: block;
+}
+
+.opstellingen__panel-intro {
+  text-align: center;
+  color: var(--muted);
+  max-width: 60ch;
+  margin: 0 auto clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.opstelling-rows {
+  border-top: 1px solid var(--line);
+  max-width: 760px;
+  margin: 0 auto;
+}
+.opstelling-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: clamp(1.1rem, 2vw, 1.5rem) 0.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.opstelling-row__name {
+  font-family: var(--serif);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: var(--text-h4);
+}
+.opstelling-row__value {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* keyboard focus visibility for the hidden radios */
+.opstellingen__radio:focus-visible ~ .opstellingen__tablist [for="tab-gescheiden"],
+.opstellingen__radio:focus-visible ~ .opstellingen__tablist [for="tab-gemengd"] {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ---------- video / rondleiding placeholder ---------- */
+.tour { max-width: 980px; margin: 0 auto; }
+.tour__frame {
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+}
+.tour__label {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- combineren band (boxed: 50% tekst links, 50% foto rechts) ---------- */
+.combine {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.combine__body { display: flex; flex-direction: column; align-items: flex-start; }
+.combine__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: var(--text-h2);
+  line-height: 1.12;
+  margin-bottom: 1.5rem;
+}
+.combine__title em { font-style: italic; }
+.combine__text { color: var(--muted); margin-bottom: clamp(2rem, 3vw, 2.75rem); max-width: 50ch; }
+.combine__media img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; }
+
+@media (max-width: 860px) {
+  .combine { grid-template-columns: 1fr; gap: clamp(1.75rem, 4vw, 2.5rem); }
+  .combine__media { order: -1; }
+}
