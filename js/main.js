@@ -188,6 +188,35 @@ document.documentElement.classList.add('js');
     if (c) gsap.fromTo(c, { yPercent: 10 }, { yPercent: -10, ease: 'none', scrollTrigger: st });
   });
 
+  /* ---------- Werkwijze-stappen: gestaggerde slide-in + subtiele scroll-parallax ---------- */
+  (function initSteps() {
+    const wrap = document.querySelector('[data-steps]');
+    if (!wrap) return;
+    const steps = gsap.utils.toArray('[data-step]', wrap);
+    if (!steps.length) return;
+
+    if (prefersReduced) {
+      gsap.set(steps, { autoAlpha: 1, y: 0 });
+      return;
+    }
+
+    /* reveal: elke card schuift van onderen omhoog en fade in, een voor een met eigen delay */
+    gsap.set(steps, { autoAlpha: 0, y: 70 });
+    gsap.to(steps, {
+      autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.18,
+      scrollTrigger: { trigger: wrap, start: 'top 80%' }
+    });
+
+    /* parallax: cards drijven met eigen snelheid mee terwijl je door de sectie scrollt */
+    const section = wrap.closest('.werkwijze') || wrap;
+    const st = { trigger: section, start: 'top bottom', end: 'bottom top', scrub: true };
+    steps.forEach((step) => {
+      const speed = parseFloat(step.getAttribute('data-step-speed')) || 1;
+      const shift = 7 * speed; /* yPercent, apart van de reveal-y */
+      gsap.fromTo(step, { yPercent: shift }, { yPercent: -shift, ease: 'none', scrollTrigger: st });
+    });
+  })();
+
   /* ---------- Features stagger ---------- */
   ScrollTrigger.batch('.feature', {
     start: 'top 88%',
