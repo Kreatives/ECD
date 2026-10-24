@@ -830,13 +830,15 @@ html.menu-open { overflow: hidden; }
   .features--cards .features__grid,
   .features--photos .features__grid,
   .features__grid--six { grid-template-columns: 1fr; }
-  .features--cards .feature,
+  /* alleen de divider-stijl grid verliest z'n linkerrand; kaarten houden hun hele box-rand */
   .features__grid--six .feature { border-left: 0; }
   /* kaarten compacter op mobiel i.p.v. een hele scherm-hoge kaart */
   .features--cards .feature { padding: clamp(1.75rem, 7vw, 2.75rem) clamp(1.5rem, 6vw, 2.25rem); }
   .features--cards .feature .feature__icon { margin-bottom: 1rem; }
   .features__grid--six .feature:nth-child(n+2) { border-top: 1px solid var(--line-light); padding-top: clamp(2.5rem, 3vw, 3.5rem); }
   .feature + .feature { border-left: 0; border-top: 1px solid var(--line-light); padding-top: 2.5rem; }
+  /* kaarten houden hun volledige rand (ook de 2e/3e kaart die anders z'n linkerrand verloor) */
+  .features--cards .feature + .feature { border: 1px solid var(--line-light); padding-top: clamp(1.75rem, 7vw, 2.75rem); }
   .zaal { grid-template-columns: 1fr; height: auto; min-height: auto; position: relative; top: auto; }
   .zaal__media { aspect-ratio: 4 / 3; order: -1; }
   /* werkwijze-stappen stapelen op elkaar: elke card blijft plakken en de volgende schuift eroverheen */
