@@ -73,48 +73,73 @@ document.documentElement.classList.add('js');
   };
   if (header) { window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
 
-  /* ---------- Mobiel menu (full-screen overlay) ---------- */
+  /* ---------- Mobiel menu (schuift vanaf de zijkant, met submenu's) ---------- */
   (function initMobileMenu() {
     const toggle = document.querySelector('[data-nav-toggle]');
     if (!toggle) return;
 
+    const a = (href, label) => '<a href="' + href + '">' + label + '<span class="mobile-menu__arrow" aria-hidden="true"></span></a>';
     const menu = document.createElement('div');
     menu.className = 'mobile-menu';
     menu.setAttribute('data-mobile-menu', '');
     menu.innerHTML =
-      '<nav class="mobile-menu__nav" aria-label="Mobiel menu">' +
-        '<a href="/">Home<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
-        '<a href="/bruiloft-marokkaans">Bruiloften<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
-        '<a href="/zalen">Zalen<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
-        '<a href="/over-ons">Over ons<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
-        '<a href="/gallerij">Gallerij<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
-        '<a href="/contact">Contact<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
-      '</nav>' +
-      '<div class="mobile-menu__foot">' +
-        '<p class="mobile-menu__foot-title">Volg ons</p>' +
-        '<p class="mobile-menu__foot-sub">Bekijk de sfeer en eerdere bruiloften op onze socials.</p>' +
-        '<div class="mobile-menu__social">' +
-          '<a href="#" class="social-link" aria-label="Instagram"><img src="assets/icons/instagram.svg" alt=""></a>' +
-          '<a href="#" class="social-link" aria-label="Facebook"><img src="assets/icons/facebook.svg" alt=""></a>' +
-          '<a href="#" class="social-link" aria-label="YouTube"><img src="assets/icons/youtube.svg" alt=""></a>' +
+      '<div class="mobile-menu__panel mobile-menu__panel--main">' +
+        '<nav class="mobile-menu__nav" aria-label="Mobiel menu">' +
+          a('/', 'Home') +
+          '<button type="button" class="mobile-menu__branch" data-submenu="bruiloften">Bruiloften<span class="mobile-menu__chev" aria-hidden="true"></span></button>' +
+          '<button type="button" class="mobile-menu__branch" data-submenu="zalen">Zalen<span class="mobile-menu__chev" aria-hidden="true"></span></button>' +
+          a('/over-ons', 'Over ons') +
+          a('/gallerij', 'Gallerij') +
+          a('/contact', 'Contact') +
+        '</nav>' +
+        '<div class="mobile-menu__foot">' +
+          '<p class="mobile-menu__foot-title">Volg ons</p>' +
+          '<p class="mobile-menu__foot-sub">Bekijk de sfeer en eerdere bruiloften op onze socials.</p>' +
+          '<div class="mobile-menu__social">' +
+            '<a href="#" class="social-link" aria-label="Instagram"><img src="assets/icons/instagram.svg" alt=""></a>' +
+            '<a href="#" class="social-link" aria-label="Facebook"><img src="assets/icons/facebook.svg" alt=""></a>' +
+            '<a href="#" class="social-link" aria-label="YouTube"><img src="assets/icons/youtube.svg" alt=""></a>' +
+          '</div>' +
+          '<div class="mobile-menu__contact">' +
+            '<a href="tel:0854002424">085 400 2424</a>' +
+            '<a href="mailto:info@ecdordrecht.nl">info@ecdordrecht.nl</a>' +
+          '</div>' +
         '</div>' +
-        '<div class="mobile-menu__contact">' +
-          '<a href="tel:0854002424">085 400 2424</a>' +
-          '<a href="mailto:info@ecdordrecht.nl">info@ecdordrecht.nl</a>' +
-        '</div>' +
+      '</div>' +
+      '<div class="mobile-menu__panel mobile-menu__panel--sub" data-panel="bruiloften">' +
+        '<button type="button" class="mobile-menu__back" data-back>Terug</button>' +
+        '<nav class="mobile-menu__nav" aria-label="Soorten bruiloften">' +
+          a('/bruiloft-marokkaans', 'Marokkaans') + a('/bruiloft-turks', 'Turks') +
+          a('/bruiloft-afghaans', 'Afghaans') + a('/bruiloft-surinaams', 'Surinaams') +
+          a('/bruiloft-henna', 'Hennafeest') +
+        '</nav>' +
+      '</div>' +
+      '<div class="mobile-menu__panel mobile-menu__panel--sub" data-panel="zalen">' +
+        '<button type="button" class="mobile-menu__back" data-back>Terug</button>' +
+        '<nav class="mobile-menu__nav" aria-label="Zalen">' +
+          a('/zaal', 'Fortuinhof') + a('/zaal-scheffers', 'Scheffers') +
+          a('/zaal-3', 'Zaal 3') + a('/zalen', 'Alle zalen') +
+        '</nav>' +
       '</div>';
     document.body.appendChild(menu);
 
+    const closeSubs = () => menu.querySelectorAll('.mobile-menu__panel--sub').forEach((p) => p.classList.remove('is-active'));
     const setOpen = (open) => {
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
       toggle.classList.toggle('is-open', open);
       menu.classList.toggle('is-open', open);
       document.documentElement.classList.toggle('menu-open', open);
+      if (!open) closeSubs();
     };
 
     toggle.addEventListener('click', () => setOpen(!menu.classList.contains('is-open')));
-    menu.querySelectorAll('a[href]').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    menu.querySelectorAll('[data-submenu]').forEach((btn) => btn.addEventListener('click', () => {
+      const panel = menu.querySelector('.mobile-menu__panel--sub[data-panel="' + btn.getAttribute('data-submenu') + '"]');
+      if (panel) panel.classList.add('is-active');
+    }));
+    menu.querySelectorAll('[data-back]').forEach((btn) => btn.addEventListener('click', closeSubs));
+    menu.querySelectorAll('a[href]').forEach((link) => link.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
   })();
 
@@ -457,6 +482,8 @@ document.documentElement.classList.add('js');
   function enableDrag(el) {
     let down = false, startX = 0, startLeft = 0, moved = false;
     el.addEventListener('pointerdown', (e) => {
+      /* touch gebruikt native scroll (swipen); alleen muis/pen via drag-to-scroll */
+      if (e.pointerType === 'touch') return;
       down = true; moved = false; startX = e.clientX; startLeft = el.scrollLeft;
       el.classList.add('is-drag');
       try { el.setPointerCapture(e.pointerId); } catch (err) {}
