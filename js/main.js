@@ -388,6 +388,17 @@ document.documentElement.classList.add('js');
     item.addEventListener('focusout', (e) => { if (!item.contains(e.relatedTarget)) item.classList.remove('is-open'); });
   });
 
+  /* ---------- Plattegrond: speel de SVG-tekenanimatie af zodra de board in beeld komt ---------- */
+  document.querySelectorAll('.fp-board').forEach((board) => {
+    if (prefersReduced || !('IntersectionObserver' in window)) { board.classList.add('fp-play'); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { board.classList.add('fp-play'); io.disconnect(); }
+      });
+    }, { threshold: 0.25 });
+    io.observe(board);
+  });
+
   /* ---------- ScrollTrigger posities herberekenen nadat afbeeldingen/fonts geladen zijn ----------
      De parallax-CTA en andere scrubs werden soms op de verkeerde scrollpositie berekend omdat de
      beelden nog niet geladen waren toen de triggers werden aangemaakt. Een refresh na load zet dit recht. */

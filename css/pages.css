@@ -198,10 +198,6 @@
 }
 .carousel__arrow:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
-/* plattegrond (zaalindeling) */
-.plattegrond { max-width: 1100px; margin: 0 auto; }
-.plattegrond img { width: 100%; height: auto; display: block; }
-
 /* ---------- combineer-zaal (boxed: 50% tekst links, 50% foto rechts) ---------- */
 .combine {
   max-width: var(--wrap); margin: 0 auto;

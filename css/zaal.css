@@ -142,3 +142,74 @@
   .combine { grid-template-columns: 1fr; gap: clamp(1.75rem, 4vw, 2.5rem); }
   .combine__media { order: -1; }
 }
+
+/* ============ PLATTEGROND — geanimeerde SVG-plattegrond ============ */
+.fp-board{position:relative;box-sizing:border-box;max-width:1440px;margin:0 auto;padding:40px 40px 48px;display:grid;grid-template-columns:170px minmax(0,1fr);column-gap:24px;row-gap:8px;color:#1E1E1E;background:#F3EEE6;font-family:var(--sans);overflow:hidden}
+.fp-serif{font-family:var(--serif)}
+.fp-eyebrow{grid-column:1/-1;margin:0;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+.fp-stage{grid-column:2;grid-row:2;display:grid;container-type:inline-size}
+.fp-stage>*{grid-area:1/1}
+.fp-plan{display:block;width:100%;height:auto}
+.fp-titleblock{align-self:end;justify-self:start;margin:0 0 1.4% 10%}
+.fp-titleblock h1{margin:0;font-weight:400;font-size:4.6cqw;line-height:1;letter-spacing:.01em;text-transform:uppercase}
+.fp-titleblock p{margin:.7em 0 0;font-size:max(14px,1.45cqw);letter-spacing:.01em;color:#2E2C29}
+.fp-legend{grid-column:1;grid-row:2;align-self:end;list-style:none;margin:0 0 2% 0;padding:0;display:flex;flex-direction:column;gap:12px}
+.fp-legend li{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.12em;color:#4A4640;transition:color .3s ease;cursor:default}
+.fp-sw{display:block;width:18px;height:18px;flex:none;box-shadow:inset 0 0 0 1px rgba(30,30,30,.12);transition:filter .3s ease,box-shadow .3s ease}
+.fp-grain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:multiply;opacity:.55}
+
+.fp-rl{font-size:9px;font-weight:500;letter-spacing:.14em;text-anchor:middle}
+.fp-zn{font-size:22px;letter-spacing:.05em;text-anchor:middle}
+.fp-m2{font-size:11px;letter-spacing:.03em;text-anchor:middle}
+.fp-ml{font-size:7.5px;letter-spacing:.2em;text-anchor:middle}
+.fp-sc{font-size:10px;letter-spacing:.06em;text-anchor:middle}
+
+@keyframes fp-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes fp-fadein{from{opacity:0}to{opacity:1}}
+@keyframes fp-settle{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes fp-rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.fp-outer{stroke-dasharray:1 1;animation:fp-draw 1s cubic-bezier(.65,0,.35,1) both}
+.fp-wall{stroke-dasharray:1 1;animation:fp-draw .55s cubic-bezier(.65,0,.35,1) both;animation-delay:var(--w,.8s)}
+.fp-fill{animation:fp-fadein .5s ease-out both;animation-delay:var(--d,1s);transition:filter .3s ease}
+.fp-fade{animation:fp-fadein .5s ease-out both;animation-delay:var(--d,1.2s)}
+.fp-tbl{transform-box:fill-box;transform-origin:center;animation:fp-settle .6s cubic-bezier(.33,0,.2,1) both;animation-delay:var(--d,1.5s)}
+.fp-lbl{transform-box:fill-box;animation:fp-rise .55s ease-out both;animation-delay:var(--d,2s)}
+@media (prefers-reduced-motion: reduce){.fp-board *{animation:none !important}}
+
+.fp-room{cursor:default}
+.fp-room:hover .fp-fill{filter:brightness(.94)}
+.fp-board:has([data-t="entree"]:hover) [data-t="entree"] .fp-fill,
+.fp-board:has([data-t="toilet"]:hover) [data-t="toilet"] .fp-fill,
+.fp-board:has([data-t="bar"]:hover) [data-t="bar"] .fp-fill,
+.fp-board:has([data-t="keuken"]:hover) [data-t="keuken"] .fp-fill,
+.fp-board:has([data-t="opslag"]:hover) [data-t="opslag"] .fp-fill,
+.fp-board:has([data-t="secundair"]:hover) [data-t="secundair"] .fp-fill{filter:brightness(.92)}
+.fp-board:has([data-t="entree"]:hover) li[data-t="entree"],
+.fp-board:has([data-t="toilet"]:hover) li[data-t="toilet"],
+.fp-board:has([data-t="bar"]:hover) li[data-t="bar"],
+.fp-board:has([data-t="keuken"]:hover) li[data-t="keuken"],
+.fp-board:has([data-t="opslag"]:hover) li[data-t="opslag"],
+.fp-board:has([data-t="secundair"]:hover) li[data-t="secundair"]{color:#1E1E1E}
+.fp-board:has([data-t="entree"]:hover) li[data-t="entree"] .fp-sw,
+.fp-board:has([data-t="toilet"]:hover) li[data-t="toilet"] .fp-sw,
+.fp-board:has([data-t="bar"]:hover) li[data-t="bar"] .fp-sw,
+.fp-board:has([data-t="keuken"]:hover) li[data-t="keuken"] .fp-sw,
+.fp-board:has([data-t="opslag"]:hover) li[data-t="opslag"] .fp-sw,
+.fp-board:has([data-t="secundair"]:hover) li[data-t="secundair"] .fp-sw{filter:brightness(.92);box-shadow:inset 0 0 0 1px #1E1E1E}
+
+@media (max-width: 760px){
+.fp-board{grid-template-columns:minmax(0,1fr);padding:24px 16px 40px;row-gap:20px}
+.fp-stage{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:28px}
+.fp-titleblock{margin:0;align-self:flex-start}
+.fp-titleblock h1{font-size:40px}
+.fp-titleblock p{font-size:15px}
+.fp-legend{grid-column:1;grid-row:3;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;margin:0}
+.fp-plan .fp-rl,.fp-plan .fp-ml{display:none}
+.fp-plan .fp-zn{font-size:26px}
+.fp-plan .fp-m2{font-size:22px}
+.fp-plan .fp-sc{font-size:22px}
+}
+
+.fp-board:not(.fp-play) *{animation-play-state:paused}
+.fp-board,.fp-board *{box-sizing:border-box}
+.fp-board ul{list-style:none}
