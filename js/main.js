@@ -188,7 +188,7 @@ document.documentElement.classList.add('js');
     if (c) gsap.fromTo(c, { yPercent: 10 }, { yPercent: -10, ease: 'none', scrollTrigger: st });
   });
 
-  /* ---------- Werkwijze-stappen: gestaggerde slide-in + subtiele scroll-parallax ---------- */
+  /* ---------- Werkwijze-stappen: gestaggerde slide-in + pin die de cards gelijk uitlijnt ---------- */
   (function initSteps() {
     const wrap = document.querySelector('[data-steps]');
     if (!wrap) return;
@@ -207,13 +207,33 @@ document.documentElement.classList.add('js');
       scrollTrigger: { trigger: wrap, start: 'top 80%' }
     });
 
-    /* parallax: cards drijven met eigen snelheid mee terwijl je door de sectie scrollt */
+    /* desktop: pin de sectie; terwijl je scrollt zakt card 2 omlaag, daarna card 3,
+       tot alle drie op gelijke hoogte staan. Daarna loopt het scrollen gewoon door. */
     const section = wrap.closest('.werkwijze') || wrap;
-    const st = { trigger: section, start: 'top bottom', end: 'bottom top', scrub: true };
-    steps.forEach((step) => {
-      const speed = parseFloat(step.getAttribute('data-step-speed')) || 1;
-      const shift = 7 * speed; /* yPercent, apart van de reveal-y */
-      gsap.fromTo(step, { yPercent: shift }, { yPercent: -shift, ease: 'none', scrollTrigger: st });
+    const [card1, card2, card3] = steps;
+    if (!card2 || !card3) return;
+
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 961px)', () => {
+      /* hoeveel elke card omlaag moet om met card 1 (de laagste) uit te lijnen */
+      const drop = (el) => Math.max(0, card1.offsetTop - el.offsetTop);
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'power2.inOut' },
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: '+=130%',
+          pin: true,
+          scrub: 0.6,
+          anticipatePin: 1,
+          invalidateOnRefresh: true
+        }
+      });
+      tl.to(card2, { y: () => drop(card2), duration: 1 })
+        .to(card3, { y: () => drop(card3), duration: 1 }, '>-0.1');
+
+      return () => gsap.set([card2, card3], { clearProps: 'transform' });
     });
   })();
 
