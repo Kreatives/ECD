@@ -7,7 +7,12 @@ document.documentElement.classList.add('js');
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasGSAP = typeof window.gsap !== 'undefined';
 
-  if (hasGSAP) gsap.registerPlugin(ScrollTrigger);
+  if (hasGSAP) {
+    gsap.registerPlugin(ScrollTrigger);
+    /* negeer de mini-resizes van de mobiele adresbalk; die lieten de scrub-animaties
+       (o.a. de parallax-CTA) midden in het scrollen opnieuw berekenen en vastlopen */
+    ScrollTrigger.config({ ignoreMobileResize: true });
+  }
 
   /* ---------- oval buttons: flip-laag achter een vaste tekst ---------- */
   document.querySelectorAll('.btn--oval').forEach((el) => {
@@ -195,29 +200,29 @@ document.documentElement.classList.add('js');
     const steps = gsap.utils.toArray('[data-step]', wrap);
     if (!steps.length) return;
 
-    if (prefersReduced) {
-      gsap.set(steps, { autoAlpha: 1, y: 0 });
-      return;
-    }
-
-    /* reveal: elke card schuift van onderen omhoog en fade in, een voor een met eigen delay */
-    gsap.set(steps, { autoAlpha: 0, y: 70 });
-    gsap.to(steps, {
-      autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.18,
-      scrollTrigger: { trigger: wrap, start: 'top 80%' }
-    });
-
-    /* desktop: pin de sectie; terwijl je scrollt zakt card 2 omlaag, daarna card 3,
-       tot alle drie op gelijke hoogte staan. Daarna loopt het scrollen gewoon door. */
     const section = wrap.closest('.werkwijze') || wrap;
     const [card1, card2, card3] = steps;
     if (!card2 || !card3) return;
 
+    /* Desktop: gestaggerde slide-in + pin die de cards gelijk uitlijnt.
+       Mobiel (<=960px) regelt het stapelen zelf via position:sticky in de CSS. */
     const mm = gsap.matchMedia();
     mm.add('(min-width: 961px)', () => {
-      /* hoeveel elke card omlaag moet om met card 1 (de laagste) uit te lijnen */
-      const drop = (el) => Math.max(0, card1.offsetTop - el.offsetTop);
+      if (prefersReduced) {
+        gsap.set(steps, { autoAlpha: 1, y: 0 });
+        return;
+      }
 
+      /* reveal: elke card schuift van onderen omhoog en fade in, een voor een met eigen delay */
+      gsap.set(steps, { autoAlpha: 0, y: 70 });
+      gsap.to(steps, {
+        autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.18,
+        scrollTrigger: { trigger: wrap, start: 'top 80%' }
+      });
+
+      /* pin de sectie; terwijl je scrollt zakt card 2 omlaag, daarna card 3,
+         tot alle drie op gelijke hoogte staan. Daarna loopt het scrollen gewoon door. */
+      const drop = (el) => Math.max(0, card1.offsetTop - el.offsetTop);
       const tl = gsap.timeline({
         defaults: { ease: 'power2.inOut' },
         scrollTrigger: {
@@ -233,7 +238,7 @@ document.documentElement.classList.add('js');
       tl.to(card2, { y: () => drop(card2), duration: 1 })
         .to(card3, { y: () => drop(card3), duration: 1 }, '>-0.1');
 
-      return () => gsap.set([card2, card3], { clearProps: 'transform' });
+      return () => gsap.set(steps, { clearProps: 'all' });
     });
   })();
 
@@ -391,7 +396,8 @@ document.documentElement.classList.add('js');
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => ScrollTrigger.refresh());
     }
-    window.addEventListener('resize', () => ScrollTrigger.refresh());
+    /* geen handmatige resize-refresh: ScrollTrigger doet dit zelf en op mobiel zou de
+       adresbalk-resize anders elke scroll een refresh forceren (zie ignoreMobileResize) */
   }
 
   /* ---------- drag-to-scroll helper ---------- */

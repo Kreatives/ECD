@@ -705,13 +705,23 @@ a { color: inherit; text-decoration: none; }
   .feature + .feature { border-left: 0; border-top: 1px solid var(--line-light); padding-top: 2.5rem; }
   .zaal { grid-template-columns: 1fr; height: auto; min-height: auto; position: relative; top: auto; }
   .zaal__media { aspect-ratio: 4 / 3; order: -1; }
-  .steps { grid-template-columns: 1fr; }
-  .step--1, .step--3 { margin-top: 0; }
-  .rev-card { flex-basis: calc((100% - clamp(1rem,2vw,1.75rem)) / 2); }
+  /* werkwijze-stappen stapelen op elkaar: elke card blijft plakken en de volgende schuift eroverheen */
+  .werkwijze { overflow: visible; }
+  .steps { display: block; }
+  .step {
+    position: sticky; margin-top: 0;
+    box-shadow: 0 -10px 30px rgba(12,10,8,0.22);
+  }
+  .step + .step { margin-top: clamp(2rem, 6vw, 3rem); }
+  .step--1 { top: 88px; }
+  .step--2 { top: 104px; }
+  .step--3 { top: 120px; }
+  /* percentage flex-basis klapt dicht in een max-content track, dus vaste breedtes op mobiel */
+  .rev-card { flex-basis: min(46vw, 420px); }
 }
 
 @media (max-width: 720px) {
-  .rev-card { flex-basis: 82%; }
+  .rev-card { flex-basis: 82vw; }
 }
 
 @media (max-width: 720px) {
