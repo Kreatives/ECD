@@ -50,6 +50,10 @@
 .page-hero--center .page-hero__sub { margin-inline: auto; }
 .page-hero--center .page-hero__actions { justify-content: center; }
 .page-hero--center .page-hero__rating { justify-content: center; }
+/* harde centrering: SplitText maakt regel-divs die anders links kunnen uitlijnen */
+.page-hero--center .page-hero__title,
+.page-hero--center .page-hero__title .split-line { text-align: center; }
+.page-hero--center .page-hero__inner { display: flex; flex-direction: column; align-items: center; }
 .page-hero__media { position: absolute; inset: 0; z-index: 0; }
 .page-hero__media img, .page-hero__media video { width: 100%; height: 100%; object-fit: cover; }
 .page-hero__scrim {
@@ -93,8 +97,19 @@
   color: rgba(255,255,255,0.75);
 }
 @media (max-width: 720px) {
+  /* center-hero (bruiloftpagina's): minder bodempadding zodat de inhoud echt in het midden valt */
+  .page-hero--center { padding-bottom: clamp(3.5rem, 12vw, 7rem); min-height: 90vh; }
+  /* hero + stats onder elkaar: stats-balk stroomt onder de knoppen i.p.v. eroverheen */
+  .page-hero--stats { flex-direction: column; align-items: stretch; padding-bottom: 0; min-height: 88vh; }
+  .page-hero--stats .page-hero__inner { margin-top: auto; padding-top: clamp(3rem, 14vw, 6rem); }
+  .page-hero--stats .page-hero__actions { flex-direction: column; align-items: flex-start; }
+  .page-hero--stats .page-hero__actions .btn { width: 100%; text-align: center; }
+  .hero-stats {
+    position: static; margin: clamp(1.5rem, 5vw, 2.25rem) calc(-1 * var(--gutter)) 0;
+    background: var(--ink); border-top: 1px solid rgba(255,255,255,0.22);
+  }
   .hero-stats__inner { flex-wrap: wrap; }
-  .hero-stat { flex: 1 0 50%; padding: 0.75rem; }
+  .hero-stat { flex: 1 0 50%; padding: 1rem 0.75rem; }
   .hero-stat:nth-child(odd) { border-left: 0; }
   .hero-stat:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,0.22); }
 }
@@ -183,13 +198,13 @@
 .carousel { position: relative; }
 .carousel__track {
   display: flex; gap: clamp(0.75rem, 1.5vw, 1.25rem);
-  overflow-x: auto; scrollbar-width: none;
+  overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory;
   cursor: grab; padding: 0 0 0.5rem;
 }
 .carousel__track::-webkit-scrollbar { display: none; }
 .carousel__track.is-drag { cursor: grabbing; scroll-behavior: auto; }
 .carousel__item {
-  flex: 0 0 clamp(320px, 40vw, 600px);
+  flex: 0 0 clamp(320px, 40vw, 600px); scroll-snap-align: start;
   aspect-ratio: 3 / 2; overflow: hidden; background: var(--gray);
 }
 .carousel__item img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -302,7 +317,7 @@
   .zaaltabs__nav { flex-direction: row; border-left: 0; border-bottom: 1px solid rgba(255,255,255,0.18); gap: 1.5rem; }
   .zaaltabs__tab { padding: 0 0 0.75rem; }
   .zaaltabs__tab.is-active::before { left: 0; right: 0; top: auto; bottom: -1px; width: auto; height: 2px; }
-  .carousel__item { flex-basis: 80%; }
+  .carousel__item { flex-basis: 100%; }
   .split { grid-template-columns: 1fr; }
   .split__media img { aspect-ratio: 4/3; }
   .split__detail { width: 70%; }
@@ -318,12 +333,26 @@
 }
 
 @media (max-width: 600px) {
-  .story__media { grid-template-columns: 1fr; gap: 1rem; }
+  /* story-foto's als horizontale slideshow i.p.v. verticale stapel */
+  .story__media {
+    display: flex; grid-template-columns: none; gap: 0.75rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter) 0.75rem;
+  }
+  .story__media::-webkit-scrollbar { display: none; }
+  .story__photo { flex: 0 0 86%; scroll-snap-align: center; }
   .story__photo--l img, .story__photo--r img, .story__photo--c img { aspect-ratio: 4 / 3; }
   .stats { grid-template-columns: 1fr; }
   .stat + .stat { border-left: 0; border-top: 1px solid var(--line); }
   .gallery { columns: 1; }
-  .gallery--grid { grid-template-columns: 1fr; }
+  /* zaal-galerij als horizontale slideshow */
+  .gallery--grid {
+    display: flex; grid-template-columns: none; grid-auto-rows: auto; gap: 0.75rem;
+    overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter) 0.75rem;
+  }
+  .gallery--grid::-webkit-scrollbar { display: none; }
+  .gallery--grid .gallery__item { flex: 0 0 86%; scroll-snap-align: center; }
   .specs { grid-template-columns: 1fr; }
   .spec + .spec { border-left: 0; border-top: 1px solid var(--line); }
 }

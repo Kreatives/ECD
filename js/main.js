@@ -73,18 +73,50 @@ document.documentElement.classList.add('js');
   };
   if (header) { window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
 
-  /* ---------- Mobile nav toggle (simple reveal of left nav) ---------- */
-  const navToggle = document.querySelector('[data-nav-toggle]');
-  if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      const open = navToggle.getAttribute('aria-expanded') === 'true';
-      navToggle.setAttribute('aria-expanded', String(!open));
-      const target = document.querySelector('#zalen');
-      if (!open && target) {
-        if (lenis) lenis.scrollTo(target); else target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  }
+  /* ---------- Mobiel menu (full-screen overlay) ---------- */
+  (function initMobileMenu() {
+    const toggle = document.querySelector('[data-nav-toggle]');
+    if (!toggle) return;
+
+    const menu = document.createElement('div');
+    menu.className = 'mobile-menu';
+    menu.setAttribute('data-mobile-menu', '');
+    menu.innerHTML =
+      '<nav class="mobile-menu__nav" aria-label="Mobiel menu">' +
+        '<a href="/">Home<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
+        '<a href="/bruiloft-marokkaans">Bruiloften<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
+        '<a href="/zalen">Zalen<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
+        '<a href="/over-ons">Over ons<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
+        '<a href="/gallerij">Gallerij<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
+        '<a href="/contact">Contact<span class="mobile-menu__arrow" aria-hidden="true"></span></a>' +
+      '</nav>' +
+      '<div class="mobile-menu__foot">' +
+        '<p class="mobile-menu__foot-title">Volg ons</p>' +
+        '<p class="mobile-menu__foot-sub">Bekijk de sfeer en eerdere bruiloften op onze socials.</p>' +
+        '<div class="mobile-menu__social">' +
+          '<a href="#" class="social-link" aria-label="Instagram"><img src="assets/icons/instagram.svg" alt=""></a>' +
+          '<a href="#" class="social-link" aria-label="Facebook"><img src="assets/icons/facebook.svg" alt=""></a>' +
+          '<a href="#" class="social-link" aria-label="YouTube"><img src="assets/icons/youtube.svg" alt=""></a>' +
+        '</div>' +
+        '<div class="mobile-menu__contact">' +
+          '<a href="tel:0854002424">085 400 2424</a>' +
+          '<a href="mailto:info@ecdordrecht.nl">info@ecdordrecht.nl</a>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(menu);
+
+    const setOpen = (open) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+      toggle.classList.toggle('is-open', open);
+      menu.classList.toggle('is-open', open);
+      document.documentElement.classList.toggle('menu-open', open);
+    };
+
+    toggle.addEventListener('click', () => setOpen(!menu.classList.contains('is-open')));
+    menu.querySelectorAll('a[href]').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  })();
 
   if (!hasGSAP) return;
 
@@ -123,24 +155,30 @@ document.documentElement.classList.add('js');
     );
   });
 
-  /* ---------- Cijfers die omhoog tellen zodra ze in beeld komen ---------- */
+  /* ---------- Cijfers die omhoog tellen zodra ze in beeld komen ----------
+     Via IntersectionObserver i.p.v. ScrollTrigger: betrouwbaarder op mobiel,
+     waar de ScrollTrigger-startpositie soms verkeerd werd berekend en de teller op 0 bleef. */
   document.querySelectorAll('.stats-band .stat__num').forEach((el) => {
     const raw = el.textContent.trim();
     const match = raw.match(/^(\d[\d.]*)(.*)$/);
     if (!match) return;
     const target = parseInt(match[1].replace(/\./g, ''), 10);
     const suffix = match[2] || '';
-    if (prefersReduced) { el.textContent = target + suffix; return; }
-    const counter = { value: 0 };
+    if (prefersReduced || !('IntersectionObserver' in window)) { el.textContent = target + suffix; return; }
     el.textContent = '0' + suffix;
-    gsap.to(counter, {
-      value: target,
-      duration: 1.8,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-      onUpdate: () => { el.textContent = Math.round(counter.value) + suffix; },
-      onComplete: () => { el.textContent = target + suffix; }
-    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        const counter = { value: 0 };
+        gsap.to(counter, {
+          value: target, duration: 1.8, ease: 'power2.out',
+          onUpdate: () => { el.textContent = Math.round(counter.value) + suffix; },
+          onComplete: () => { el.textContent = target + suffix; }
+        });
+      });
+    }, { threshold: 0.35 });
+    io.observe(el);
   });
 
   /* ---------- Split-sectie: gesequencede reveal (links -> rechts, boven -> onder) ---------- */
@@ -171,6 +209,8 @@ document.documentElement.classList.add('js');
   /* ---------- Story-triptych: reveal (links -> rechts) + parallax (foto's omhoog) ---------- */
   document.querySelectorAll('[data-story-parallax]').forEach((media) => {
     if (prefersReduced) return;
+    /* op mobiel is dit een horizontale slideshow (CSS); geen clip/parallax dan */
+    if (window.matchMedia('(max-width: 600px)').matches) return;
     const l = media.querySelector('.story__photo--l img');
     const c = media.querySelector('.story__photo--c img');
     const r = media.querySelector('.story__photo--r img');

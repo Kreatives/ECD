@@ -28,8 +28,8 @@
 }
 .contact-card__icon img { width: 56%; height: 56%; object-fit: contain; }
 .contact-card__title {
-  font-family: var(--sans); font-weight: 700; font-size: var(--text-xs);
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem;
+  font-family: var(--sans); font-weight: 700; font-size: var(--text-sm);
+  color: var(--muted); margin-bottom: 0.75rem;
 }
 .contact-card__value {
   font-family: var(--serif); font-weight: 400;
@@ -89,8 +89,8 @@
 
 .address-block + .address-block { margin-top: 1.75rem; }
 .address-block__label {
-  display: block; font-family: var(--sans); font-weight: 700; font-size: var(--text-xs);
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem;
+  display: block; font-family: var(--sans); font-weight: 700; font-size: var(--text-sm);
+  color: var(--muted); margin-bottom: 0.5rem;
 }
 .address-block__text { line-height: 1.7; }
 .address-block__text a { border-bottom: 1px solid var(--line); transition: border-color .25s ease; }
@@ -103,7 +103,10 @@
   .contact-cards { grid-template-columns: 1fr; gap: clamp(2rem, 6vw, 3rem); }
 }
 @media (max-width: 760px) {
-  .locatie__card { position: static; transform: none; width: 100%; box-shadow: none; border-bottom: 1px solid var(--line); }
+  /* kaart boven, info-kaart er direct onder; geen absolute overlay die lege ruimte achterlaat */
+  .locatie { display: flex; flex-direction: column; }
+  .locatie__map { height: clamp(260px, 42vh, 360px); }
+  .locatie__card { position: static; transform: none; width: 100%; box-shadow: none; }
 }
 @media (max-width: 600px) {
   .contact-form__row { grid-template-columns: 1fr; }

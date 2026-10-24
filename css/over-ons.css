@@ -9,3 +9,10 @@
 
 /* Keep the stat labels on a single, calm line where they can. */
 .stat__label { max-width: 20ch; margin-inline: auto; }
+
+/* Mobiel: te veel witruimte tussen de verhaal-foto en de cijferband wegnemen */
+@media (max-width: 600px) {
+  .split__detail { width: 100%; margin-top: clamp(1.5rem, 5vw, 2.5rem); }
+  .section--paper:has(.split) { padding-bottom: clamp(2.5rem, 8vw, 4rem); }
+  .stats-band { padding-top: clamp(2.5rem, 8vw, 4rem); }
+}
