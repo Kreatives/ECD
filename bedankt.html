@@ -81,37 +81,67 @@
 
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer">
-  <div class="site-footer__top">
-    <a href="/" class="site-footer__logo"><img src="assets/logo/logo.png" alt="Event Center Dordrecht"></a>
-    <nav class="site-footer__nav" aria-label="Footer menu">
-      <a href="/">Home</a>
-      <a href="/bruiloft-marokkaans">Bruiloft</a>
-      <div class="nav__item nav__item--dropdown">
-        <a href="/zalen" aria-haspopup="true">Zalen<span class="nav__caret" aria-hidden="true"></span></a>
-        <div class="nav__dropdown">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <a href="/" class="site-footer__logo"><img src="assets/logo/logo.png" alt="Event Center Dordrecht"></a>
+      <p class="site-footer__tagline">Waar jullie mooiste dag alle ruimte en aandacht krijgt.</p>
+    </div>
+
+    <div class="site-footer__row">
+      <nav class="footer-cols" aria-label="Footer navigatie">
+        <div class="footer-col">
+          <h3 class="footer-col__title">Zalen</h3>
           <a href="/zaal">Fortuinhof</a>
           <a href="/zaal-scheffers">Scheffers</a>
           <a href="/zaal-3">Zaal 3</a>
+          <a href="/zalen">Alle zalen</a>
         </div>
+        <div class="footer-col">
+          <h3 class="footer-col__title">Bruiloften</h3>
+          <a href="/bruiloft-marokkaans">Marokkaans</a>
+          <a href="/bruiloft-turks">Turks</a>
+          <a href="/bruiloft-afghaans">Afghaans</a>
+          <a href="/bruiloft-surinaams">Surinaams</a>
+          <a href="/bruiloft-henna">Hennafeest</a>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-col__title">Informatie</h3>
+          <a href="/over-ons">Over ons</a>
+          <a href="/gallerij">Gallerij</a>
+          <a href="/offerte">Offerte</a>
+          <a href="/contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-col__title">Contact</h3>
+          <a href="tel:0854002424">085 400 2424</a>
+          <a href="mailto:info@ecdordrecht.nl">info@ecdordrecht.nl</a>
+          <div class="footer-social" aria-label="Volg ons op social media">
+            <a href="#" class="social-link" aria-label="Instagram"><img src="assets/icons/instagram.svg" alt=""></a>
+            <a href="#" class="social-link" aria-label="Facebook"><img src="assets/icons/facebook.svg" alt=""></a>
+            <a href="#" class="social-link" aria-label="YouTube"><img src="assets/icons/youtube.svg" alt=""></a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="footer-news">
+        <p class="footer-news__title">Blijf op de hoogte van nieuwe data en inspiratie</p>
+        <form class="footer-news__form" action="mailto:info@ecdordrecht.nl" method="post" enctype="text/plain">
+          <input type="email" name="email" required placeholder="Je e-mailadres" aria-label="Je e-mailadres">
+          <button type="submit" class="footer-news__btn">Inschrijven</button>
+        </form>
       </div>
-      <a href="/over-ons">Over ons</a>
-      <a href="/contact">Contact</a>
-      <a href="/offerte">Offerte</a>
+    </div>
+  </div>
+
+  <div class="site-footer__legal">
+    <p>&copy; 2026 Event Center Dordrecht. Alle rechten voorbehouden.</p>
+    <nav class="footer-legal__links" aria-label="Juridisch">
+      <a href="/contact">Privacybeleid</a>
+      <a href="/contact">Algemene voorwaarden</a>
     </nav>
-    <div class="site-footer__contact">
-      <a href="tel:0854002424"><img class="contact-ico" src="assets/icons/telefoon.svg" alt="" aria-hidden="true">085 400 2424</a>
-      <a href="mailto:info@ecdordrecht.nl"><img class="contact-ico" src="assets/icons/mail.svg" alt="" aria-hidden="true">info@ecdordrecht.nl</a>
-    </div>
-    <div class="site-footer__social" aria-label="Volg ons op social media">
-      <a href="#" class="social-link" aria-label="Instagram"><img src="assets/icons/instagram.svg" alt=""></a>
-      <a href="#" class="social-link" aria-label="Facebook"><img src="assets/icons/facebook.svg" alt=""></a>
-      <a href="#" class="social-link" aria-label="YouTube"><img src="assets/icons/youtube.svg" alt=""></a>
-    </div>
   </div>
-  <div class="site-footer__bottom">
-    <p>Event Center Dordrecht</p>
-    <p>Waar jullie mooiste dag alle ruimte en aandacht krijgt.</p>
-  </div>
+
+  <div class="site-footer__wordmark" aria-hidden="true">Event Center Dordrecht</div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
