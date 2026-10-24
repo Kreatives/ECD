@@ -144,7 +144,7 @@
 }
 
 /* ============ PLATTEGROND — geanimeerde SVG-plattegrond ============ */
-.fp-board{position:relative;box-sizing:border-box;max-width:1440px;margin:0 auto;padding:40px 40px 48px;display:grid;grid-template-columns:170px minmax(0,1fr);column-gap:24px;row-gap:8px;color:#1E1E1E;background:#F3EEE6;font-family:var(--sans);overflow:hidden}
+.fp-board{position:relative;box-sizing:border-box;max-width:1440px;margin:0 auto;padding:40px 40px 48px;display:grid;grid-template-columns:170px minmax(0,1fr);column-gap:24px;row-gap:8px;color:#1E1E1E;background:transparent;font-family:var(--sans);overflow:hidden}
 .fp-serif{font-family:var(--serif)}
 .fp-eyebrow{grid-column:1/-1;margin:0;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
 .fp-stage{grid-column:2;grid-row:2;display:grid;container-type:inline-size}
@@ -156,7 +156,7 @@
 .fp-legend{grid-column:1;grid-row:2;align-self:end;list-style:none;margin:0 0 2% 0;padding:0;display:flex;flex-direction:column;gap:12px}
 .fp-legend li{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.12em;color:#4A4640;transition:color .3s ease;cursor:default}
 .fp-sw{display:block;width:18px;height:18px;flex:none;box-shadow:inset 0 0 0 1px rgba(30,30,30,.12);transition:filter .3s ease,box-shadow .3s ease}
-.fp-grain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:multiply;opacity:.55}
+.fp-grain{display:none}
 
 .fp-rl{font-size:9px;font-weight:500;letter-spacing:.14em;text-anchor:middle}
 .fp-zn{font-size:22px;letter-spacing:.05em;text-anchor:middle}

@@ -213,11 +213,13 @@ document.documentElement.classList.add('js');
         return;
       }
 
-      /* reveal: elke card schuift van onderen omhoog en fade in, een voor een met eigen delay */
-      gsap.set(steps, { autoAlpha: 0, y: 70 });
+      /* reveal: elke card schuift van onderen omhoog en fade in, een voor een met eigen delay.
+         yPercent (ipv y) zodat het niet botst met de pin hieronder die y aanstuurt; once zodat
+         de reveal niet opnieuw afspeelt als je terugscrollt (dat liet de pin 'trippen'). */
+      gsap.set(steps, { autoAlpha: 0, yPercent: 16 });
       gsap.to(steps, {
-        autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.18,
-        scrollTrigger: { trigger: wrap, start: 'top 80%' }
+        autoAlpha: 1, yPercent: 0, duration: 0.9, ease: 'power3.out', stagger: 0.18,
+        scrollTrigger: { trigger: wrap, start: 'top 80%', once: true }
       });
 
       /* pin de sectie; terwijl je scrollt zakt card 2 omlaag, daarna card 3,

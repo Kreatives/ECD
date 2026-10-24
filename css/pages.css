@@ -72,6 +72,10 @@
 
 /* kerngegevens / cijfers onderin de hero */
 .page-hero--stats { min-height: 88vh; padding-bottom: clamp(9.5rem, 13vw, 13.5rem); }
+/* donkerder verloop onderaan de zaal-hero's zodat titel, knoppen en de statistieken beter opvallen */
+.page-hero--stats .page-hero__scrim {
+  background: linear-gradient(to top, rgba(12,10,8,0.92) 0%, rgba(12,10,8,0.7) 32%, rgba(12,10,8,0.4) 65%, rgba(12,10,8,0.5) 100%);
+}
 .hero-stats {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
   padding: clamp(1.25rem, 2.2vw, 2rem) var(--gutter);
