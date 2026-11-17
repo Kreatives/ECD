@@ -62,7 +62,7 @@
 <!-- ============ HERO (dark media, transparent header) ============ -->
 <section class="page-hero page-hero--stats">
   <div class="page-hero__media" aria-hidden="true">
-    <img src="assets/img/zaal/hero.jpg" alt="">
+    <img data-cms="zaal:zaal-hero" data-cms-label="Zaal hero" src="assets/img/zaal/hero.jpg" alt="">
     <div class="page-hero__scrim"></div>
   </div>
 
@@ -93,7 +93,7 @@
     <p class="heading__intro">We laten de zaal zien zoals jullie gasten hem beleven, van een volledig gedekt diner tot de details waar de sfeer in zit, met de kroonluchters, het podium en de bruidsbank.</p>
   </div>
 
-  <div class="gallery gallery--grid" data-reveal>
+  <div class="gallery gallery--grid" data-reveal data-cms-gallery="zaal:grid" data-cms-kind="grid" data-cms-media="image" data-cms-count="6" data-cms-label="Fotogalerij">
     <figure class="gallery__item"><img src="assets/img/zaal/g1.jpg" alt="Fortuinhof met gedekte tafels voor een bruiloftsdiner"></figure>
     <figure class="gallery__item"><img src="assets/img/zaal/g2.jpg" alt="Sfeerverlichting en kroonluchters in Fortuinhof"></figure>
     <figure class="gallery__item"><img src="assets/img/zaal/g3.jpg" alt="Het podium in Fortuinhof klaar voor het bruidspaar"></figure>
@@ -340,7 +340,7 @@
 
   <div class="diensten__scroller" data-dscroll>
     <article class="dcard">
-      <img src="assets/img/zaal/fac-2.jpg" alt="De bruidskamer bij Fortuinhof">
+      <img data-cms="zaal:zaal-fac-2" data-cms-label="Zaal fac 2" src="assets/img/zaal/fac-2.jpg" alt="De bruidskamer bij Fortuinhof">
       <div class="dcard__body">
         <h3 class="dcard__title">Bruidskamer</h3>
         <p class="dcard__text">Een eigen ruimte waar de bruid zich rustig klaarmaakt en tussen de momenten door even tot zichzelf komt.</p>
@@ -349,7 +349,7 @@
 
     <!-- Geen eigen foto van de gebedsruimte beschikbaar, g3.jpg uit de galerij als plaatsvervanger. -->
     <article class="dcard">
-      <img src="assets/img/zaal/g3.jpg" alt="Rustige ruimte bij Fortuinhof">
+      <img data-cms="zaal:zaal-g3" data-cms-label="Zaal g3" src="assets/img/zaal/g3.jpg" alt="Rustige ruimte bij Fortuinhof">
       <div class="dcard__body">
         <h3 class="dcard__title">Gebedsruimte</h3>
         <p class="dcard__text">Een aparte ruimte waar gasten in alle rust kunnen bidden, zonder dat zij het feest hoeven te verlaten.</p>
@@ -357,7 +357,7 @@
     </article>
 
     <article class="dcard">
-      <img src="assets/img/zaal/g5.jpg" alt="De eigen ingang van Fortuinhof">
+      <img data-cms="zaal:zaal-g5" data-cms-label="Zaal g5" src="assets/img/zaal/g5.jpg" alt="De eigen ingang van Fortuinhof">
       <div class="dcard__body">
         <h3 class="dcard__title">Eigen ingang</h3>
         <p class="dcard__text">Fortuinhof heeft een eigen ingang, zodat jullie gezelschap de zaal voor zich heeft en gasten elkaar niet kruisen.</p>
@@ -365,7 +365,7 @@
     </article>
 
     <article class="dcard">
-      <img src="assets/img/zaal/fac-1.jpg" alt="Licht en geluid in Fortuinhof">
+      <img data-cms="zaal:zaal-fac-1" data-cms-label="Zaal fac 1" src="assets/img/zaal/fac-1.jpg" alt="Licht en geluid in Fortuinhof">
       <div class="dcard__body">
         <h3 class="dcard__title">Licht en geluid</h3>
         <p class="dcard__text">Sfeerverlichting en een geluidsinstallatie die klaarstaat, zodat de dj of de live-muziek meteen aan de slag kan.</p>
@@ -399,7 +399,7 @@
       <p class="combine__text">Scheffers biedt ruimte aan grotere gezelschappen, met hetzelfde comfort en dezelfde aandacht voor de aankleding. Door beide zalen samen te nemen vieren jullie met de hele familie onder één dak.</p>
       <a href="/zaal-scheffers" class="btn btn--oval combine__cta">Bekijk Scheffers</a>
     </div>
-    <div class="combine__media"><img src="assets/img/zalen/zaal2.jpg" alt="Zaal Scheffers in sfeervolle aankleding"></div>
+    <div class="combine__media"><img data-cms="zaal:zalen-zaal2" data-cms-label="Zalen zaal2" src="assets/img/zalen/zaal2.jpg" alt="Zaal Scheffers in sfeervolle aankleding"></div>
   </div>
 </section>
 
@@ -457,7 +457,7 @@
 <!-- ============ AFSLUITENDE CTA ============ -->
 <section class="cta-band">
   <div class="cta-band__media" aria-hidden="true">
-    <img src="assets/img/zaal/g2.jpg" alt="">
+    <img data-cms="zaal:zaal-g2" data-cms-label="Zaal g2" src="assets/img/zaal/g2.jpg" alt="">
     <div class="cta-band__scrim"></div>
   </div>
   <div class="cta-band__inner" data-reveal>
@@ -539,6 +539,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="js/main.js"></script>
+<script src="/js/cms-loader.js" data-main="/js/main.js"></script>
 </body>
 </html>

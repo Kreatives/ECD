@@ -1,0 +1,8 @@
+# Niet nodig in de deployment
+.textvenv
+__pycache__
+scripts
+*.md
+ECD-teksten.xlsx
+.env
+.env*.local

@@ -1,0 +1,10 @@
+{
+  "name": "ecd-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Event Center Dordrecht - statische site met /admin media-CMS (Vercel Functions + Supabase Storage)",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.119.0"
+  }
+}

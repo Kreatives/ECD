@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ECD — Media beheer</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <!-- Login -->
+  <div id="login" class="login" hidden>
+    <form id="login-form" class="login__card">
+      <h1 class="login__title">ECD — Beheer</h1>
+      <p class="login__sub">Log in om de foto's en video's van de website te beheren.</p>
+      <input type="password" id="pw" class="login__input" placeholder="Wachtwoord" autocomplete="current-password" required>
+      <button type="submit" class="btn btn--primary login__btn">Inloggen</button>
+      <p id="login-err" class="login__err" hidden></p>
+    </form>
+  </div>
+
+  <!-- App -->
+  <div id="app" class="app" hidden>
+    <aside class="side">
+      <div class="side__brand">ECD<span>beheer</span></div>
+      <nav id="pagenav" class="side__nav" aria-label="Pagina's"></nav>
+      <button id="logout" class="side__logout">Uitloggen</button>
+    </aside>
+
+    <main class="main">
+      <header class="main__head">
+        <div>
+          <h1 id="page-title" class="main__title">—</h1>
+          <p id="page-hint" class="main__hint"></p>
+        </div>
+        <div class="main__actions">
+          <span id="status" class="status" role="status"></span>
+          <button id="save" class="btn btn--primary" disabled>Opslaan</button>
+        </div>
+      </header>
+      <div id="editor" class="editor" aria-busy="false"></div>
+    </main>
+  </div>
+
+  <!-- Verborgen file-input, hergebruikt voor alle uploads -->
+  <input type="file" id="fileinput" hidden>
+
+  <script type="module" src="/admin/admin.js"></script>
+</body>
+</html>

@@ -69,7 +69,7 @@
 
 <!-- ============ GALERIJ GRID (masonry) ============ -->
 <section class="section" style="padding-top:0;">
-  <div class="gallery" data-reveal>
+  <div class="gallery" data-reveal data-cms-gallery="gallerij:grid" data-cms-kind="grid" data-cms-media="image" data-cms-count="14" data-cms-label="Fotogalerij">
     <figure class="gallery__item"><img src="assets/img/gallerij/g1.jpg" alt="Sfeerbeeld van een hennafeest"></figure>
     <figure class="gallery__item"><img src="assets/img/gallerij/g2.jpg" alt="Gedekte tafels in de zaal"></figure>
     <figure class="gallery__item"><img src="assets/img/gallerij/g3.jpg" alt="Gerechten uit de keuken"></figure>
@@ -96,7 +96,7 @@
 
   <div class="zaal-list" data-reveal>
     <article class="zaal-row">
-      <div class="zaal-row__media"><img src="assets/img/zalen/zaal1.jpg" alt="Zaal Fortuinhof"></div>
+      <div class="zaal-row__media"><img data-cms="gallerij:zalen-zaal1" data-cms-label="Zalen zaal1" src="assets/img/zalen/zaal1.jpg" alt="Zaal Fortuinhof"></div>
       <div>
         <h3 class="zaal-row__title">Fortuinhof</h3>
         <div class="zaal-row__tags">
@@ -115,7 +115,7 @@
     </article>
 
     <article class="zaal-row">
-      <div class="zaal-row__media"><img src="assets/img/zalen/zaal2.jpg" alt="Zaal Scheffers"></div>
+      <div class="zaal-row__media"><img data-cms="gallerij:zalen-zaal2" data-cms-label="Zalen zaal2" src="assets/img/zalen/zaal2.jpg" alt="Zaal Scheffers"></div>
       <div>
         <h3 class="zaal-row__title">Scheffers</h3>
         <div class="zaal-row__tags">
@@ -134,7 +134,7 @@
     </article>
 
     <article class="zaal-row">
-      <div class="zaal-row__media"><img src="assets/img/zalen/zaal3.jpg" alt="Derde zaal"></div>
+      <div class="zaal-row__media"><img data-cms="gallerij:zalen-zaal3" data-cms-label="Zalen zaal3" src="assets/img/zalen/zaal3.jpg" alt="Derde zaal"></div>
       <div>
         <h3 class="zaal-row__title">Zaal 3</h3>
         <div class="zaal-row__tags">
@@ -157,7 +157,7 @@
 <!-- ============ CTA ============ -->
 <section class="cta-band">
   <div class="cta-band__media" aria-hidden="true">
-    <img src="assets/img/werkwijze/bg.jpg" alt="">
+    <img data-cms="gallerij:werkwijze-bg" data-cms-label="Werkwijze bg" src="assets/img/werkwijze/bg.jpg" alt="">
     <div class="cta-band__scrim"></div>
   </div>
   <div class="cta-band__inner">
@@ -239,6 +239,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="js/main.js"></script>
+<script src="/js/cms-loader.js" data-main="/js/main.js"></script>
 </body>
 </html>
