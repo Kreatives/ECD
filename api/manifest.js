@@ -3,7 +3,10 @@
 import { readManifest } from './_supabase.js';
 
 export default async function handler(req, res) {
-  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=86400');
+  // Kort cachen zodat wijzigingen binnen ~10s live zijn, maar bezoekers niet
+  // elke pageview een functie-call triggeren. Geen lange stale-while-revalidate
+  // (die serveerde eerder tot 24u het oude manifest).
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=10, stale-while-revalidate=20');
   try {
     res.status(200).json(await readManifest());
   } catch {

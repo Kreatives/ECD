@@ -308,7 +308,7 @@ function renderGallery(g) {
   head.appendChild(el('h2', 'section__title', escapeHtml(g.label)));
   const kindLabel = { marquee: 'Fotostrip', reels: 'Video reels', carousel: 'Carousel', grid: 'Raster' }[g.kind] || g.kind;
   const meta = el('p', 'section__meta',
-    `${kindLabel} · ${g.media === 'video' ? "video's" : 'foto’s'} · sleep om de volgorde te wijzigen`);
+    `${kindLabel} · ${g.media === 'video' ? "video's" : 'foto’s'} · ‹ › om te sorteren · Vervang om te wisselen`);
   head.appendChild(meta);
   if (manifest.galleries[g.key]) head.appendChild(el('span', 'badge', 'Aangepast'));
   wrap.appendChild(head);
@@ -357,12 +357,20 @@ function renderItems(box, g) {
 
 function renderItem(g, it, idx) {
   const node = el('div', 'item');
-  node.draggable = true;
-  node.dataset.idx = String(idx);
   const media = it.type === 'video'
     ? `<video src="${attr(it.src)}" muted playsinline preload="metadata"></video>`
     : `<img src="${attr(it.src)}" alt="">`;
-  node.innerHTML = `${media}<span class="item__num">${idx + 1}</span><button class="item__del" title="Verwijderen" aria-label="Verwijderen">×</button>`;
+  node.innerHTML =
+    media +
+    `<span class="item__num">${idx + 1}</span>` +
+    `<button class="item__del" title="Verwijderen" aria-label="Verwijderen">×</button>` +
+    `<div class="item__bar">` +
+      `<button class="item__mv" data-dir="-1" title="Naar voren" aria-label="Naar voren">‹</button>` +
+      `<button class="item__replace" title="Vervang deze ${g.media === 'video' ? 'video' : 'foto'}">Vervang</button>` +
+      `<button class="item__mv" data-dir="1" title="Naar achter" aria-label="Naar achter">›</button>` +
+    `</div>`;
+
+  const sectionEl = () => node.closest('.section');
 
   node.querySelector('.item__del').addEventListener('click', (e) => {
     e.stopPropagation();
@@ -370,31 +378,29 @@ function renderItem(g, it, idx) {
     if (items.length <= 1) { alert('Er moet minimaal één item blijven staan.'); return; }
     items.splice(idx, 1);
     setDirty();
-    const sec = node.closest('.section');
-    refreshGallery(sec, g);
+    refreshGallery(sectionEl(), g);
   });
 
-  // drag reorder
-  node.addEventListener('dragstart', (e) => {
-    node.classList.add('dragging');
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', String(idx));
-  });
-  node.addEventListener('dragend', () => node.classList.remove('dragging'));
-  node.addEventListener('dragover', (e) => { e.preventDefault(); node.classList.add('over'); });
-  node.addEventListener('dragleave', () => node.classList.remove('over'));
-  node.addEventListener('drop', (e) => {
-    e.preventDefault();
-    node.classList.remove('over');
-    const from = parseInt(e.dataTransfer.getData('text/plain'), 10);
-    const to = idx;
-    if (from === to || Number.isNaN(from)) return;
+  node.querySelectorAll('.item__mv').forEach((btn) => btn.addEventListener('click', (e) => {
+    e.stopPropagation();
     const items = galItems(g);
-    const [moved] = items.splice(from, 1);
-    items.splice(to, 0, moved);
+    const to = idx + parseInt(btn.getAttribute('data-dir'), 10);
+    if (to < 0 || to >= items.length) return;
+    const tmp = items[idx]; items[idx] = items[to]; items[to] = tmp;
     setDirty();
-    const sec = node.closest('.section');
-    refreshGallery(sec, g);
+    refreshGallery(sectionEl(), g);
+  }));
+
+  node.querySelector('.item__replace').addEventListener('click', async (e) => {
+    e.stopPropagation();
+    const file = await pickFile(g.media);
+    if (!file) return;
+    const url = await doUpload(file);
+    if (!url) return;
+    const items = galItems(g);
+    items[idx] = { type: g.media, src: url, alt: items[idx] ? items[idx].alt : '' };
+    setDirty();
+    refreshGallery(sectionEl(), g);
   });
 
   return node;

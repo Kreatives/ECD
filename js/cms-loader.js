@@ -92,7 +92,9 @@
     if (!window.fetch) return Promise.resolve(null);
     var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 2500) : null;
-    return fetch('/api/manifest', ctrl ? { signal: ctrl.signal } : undefined)
+    var opts = { cache: 'no-store' };
+    if (ctrl) opts.signal = ctrl.signal;
+    return fetch('/api/manifest', opts)
       .then(function (r) { return r.ok ? r.json() : null; })
       .catch(function () { return null; })
       .then(function (m) { if (timer) clearTimeout(timer); return m; });
