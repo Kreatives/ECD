@@ -35,7 +35,22 @@ let activePage = null;
 // (ook niet-opgeslagen) manifest uit sessionStorage i.p.v. /api/manifest.
 const PREVIEW_KEY = 'cms_preview_manifest';
 const previewFrame = $('#preview-frame');
+const previewBody = $('#preview-body');
+const DESKTOP_W = 1440; // iframe rendert op deze breedte en wordt verkleind ingepast
 let previewTimer = null;
+
+// Schaal de (op desktopbreedte gerenderde) iframe zodat hij in de smalle kolom past.
+function sizePreview() {
+  if (!previewBody || !previewFrame) return;
+  const w = previewBody.clientWidth;
+  const h = previewBody.clientHeight;
+  if (!w || !h) return;
+  const scale = w / DESKTOP_W;
+  previewFrame.style.width = DESKTOP_W + 'px';
+  previewFrame.style.height = (h / scale) + 'px';
+  previewFrame.style.transform = 'scale(' + scale + ')';
+}
+window.addEventListener('resize', sizePreview);
 
 function pageUrl(file) { return file === 'index.html' ? '/' : '/' + file.replace(/\.html$/, ''); }
 function writePreviewState() { try { sessionStorage.setItem(PREVIEW_KEY, JSON.stringify(manifest)); } catch (e) {} }
@@ -45,7 +60,7 @@ function reloadPreviewNow() {
 }
 function loadPreview(page) {
   writePreviewState();
-  if (previewFrame) previewFrame.src = pageUrl(page.file) + '?cmspreview=1';
+  if (previewFrame) { previewFrame.src = pageUrl(page.file) + '?cmspreview=1'; sizePreview(); }
 }
 function refreshPreview() {
   writePreviewState();
@@ -72,6 +87,7 @@ function showLogin(msg) {
 function showApp() {
   $('#login').hidden = true;
   $('#app').hidden = false;
+  sizePreview();
   renderNav();
   selectPage(PAGES[0]);
 }

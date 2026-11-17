@@ -80,7 +80,10 @@ img,video{display:block;max-width:100%}
 .preview__head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}
 .preview__title{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-dim)}
 .preview__actions{display:flex;gap:8px}
-.preview__frame{flex:1;width:100%;border:0;background:#fff}
+/* De iframe rendert op volle desktopbreedte en wordt verkleind ingepast,
+   zodat je de echte desktop-layout ziet i.p.v. de tablet-breakpoint. */
+.preview__body{flex:1;min-height:0;overflow:hidden;position:relative;background:#fff}
+.preview__frame{border:0;transform-origin:top left;background:#fff}
 
 /* Editor sections */
 .section{margin-bottom:34px}
