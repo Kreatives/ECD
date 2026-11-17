@@ -131,48 +131,54 @@ function toAbs(src) {
   return src;
 }
 
+function singleFrom(node) {
+  const tag = node.tagName.toLowerCase();
+  let defSrc = '';
+  let defPoster = '';
+  if (tag === 'video') {
+    const source = node.querySelector('source');
+    defSrc = toAbs((source && source.getAttribute('src')) || node.getAttribute('src') || '');
+    defPoster = toAbs(node.getAttribute('poster') || '');
+  } else {
+    defSrc = toAbs(node.getAttribute('src') || '');
+  }
+  return {
+    key: node.getAttribute('data-cms'),
+    label: node.getAttribute('data-cms-label') || node.getAttribute('data-cms'),
+    tag, defSrc, defPoster,
+  };
+}
+
+function galleryFrom(node) {
+  const count = parseInt(node.getAttribute('data-cms-count') || '0', 10) || node.children.length;
+  const media = node.getAttribute('data-cms-media') || 'image';
+  const items = [];
+  for (const child of node.children) {
+    if (items.length >= count) break;
+    const m = child.querySelector('img,video') || (child.matches('img,video') ? child : null);
+    if (!m) continue;
+    items.push({ type: media, src: toAbs(m.getAttribute('src') || ''), alt: m.getAttribute('alt') || '' });
+  }
+  return {
+    key: node.getAttribute('data-cms-gallery'),
+    label: node.getAttribute('data-cms-label') || 'Galerij',
+    kind: node.getAttribute('data-cms-kind') || 'grid',
+    media, count, defItems: items,
+  };
+}
+
 async function parsePage(file) {
   const res = await fetch('/' + file, { cache: 'no-store' });
   const html = await res.text();
   const doc = new DOMParser().parseFromString(html, 'text/html');
 
-  const singles = [...doc.querySelectorAll('[data-cms]')].map((node) => {
-    const tag = node.tagName.toLowerCase();
-    let defSrc = '';
-    let defPoster = '';
-    if (tag === 'video') {
-      const source = node.querySelector('source');
-      defSrc = toAbs((source && source.getAttribute('src')) || node.getAttribute('src') || '');
-      defPoster = toAbs(node.getAttribute('poster') || '');
-    } else {
-      defSrc = toAbs(node.getAttribute('src') || '');
-    }
-    return {
-      key: node.getAttribute('data-cms'),
-      label: node.getAttribute('data-cms-label') || node.getAttribute('data-cms'),
-      tag, defSrc, defPoster,
-    };
+  // In documentvolgorde, zodat de editor dezelfde volgorde heeft als de pagina.
+  const ordered = [];
+  doc.querySelectorAll('[data-cms], [data-cms-gallery]').forEach((node) => {
+    if (node.hasAttribute('data-cms-gallery')) ordered.push({ type: 'gallery', data: galleryFrom(node) });
+    else ordered.push({ type: 'single', data: singleFrom(node) });
   });
-
-  const galleries = [...doc.querySelectorAll('[data-cms-gallery]')].map((node) => {
-    const count = parseInt(node.getAttribute('data-cms-count') || '0', 10) || node.children.length;
-    const media = node.getAttribute('data-cms-media') || 'image';
-    const items = [];
-    for (const child of node.children) {
-      if (items.length >= count) break;
-      const m = child.querySelector('img,video') || (child.matches('img,video') ? child : null);
-      if (!m) continue;
-      items.push({ type: media, src: toAbs(m.getAttribute('src') || ''), alt: m.getAttribute('alt') || '' });
-    }
-    return {
-      key: node.getAttribute('data-cms-gallery'),
-      label: node.getAttribute('data-cms-label') || 'Galerij',
-      kind: node.getAttribute('data-cms-kind') || 'grid',
-      media, count, defItems: items,
-    };
-  });
-
-  return { singles, galleries };
+  return { ordered };
 }
 
 async function selectPage(page) {
@@ -197,28 +203,33 @@ function renderEditor(page, data) {
   const box = $('#editor');
   box.innerHTML = '';
 
-  const nMedia = data.singles.length + data.galleries.reduce((a, g) => a + 1, 0);
+  const ordered = data.ordered;
+  const nGal = ordered.filter((o) => o.type === 'gallery').length;
+  const nSingle = ordered.length - nGal;
   $('#page-hint').textContent =
-    `${data.galleries.length} galerij(en) · ${data.singles.length} losse afbeelding(en)/video('s)`;
+    `${nGal} galerij(en) · ${nSingle} losse afbeelding(en)/video('s) — zelfde volgorde als de pagina`;
 
-  if (!nMedia) {
+  if (!ordered.length) {
     box.innerHTML = '<div class="empty">Op deze pagina staan geen beheerbare media.</div>';
     return;
   }
 
-  // Galerijen bovenaan (de "carousels als gallerij")
-  data.galleries.forEach((g) => box.appendChild(renderGallery(g)));
-
-  // Losse media
-  if (data.singles.length) {
+  // Render in documentvolgorde; opeenvolgende losse media samen in één raster.
+  let buffer = [];
+  const flush = () => {
+    if (!buffer.length) return;
     const sec = el('section', 'section');
-    sec.appendChild(el('h2', 'section__title', 'Losse afbeeldingen & video’s'));
-    sec.appendChild(el('p', 'section__meta', 'Klik op “Vervang” om een foto of video te wijzigen. “Standaard” zet het origineel terug.'));
     const grid = el('div', 'grid');
-    data.singles.forEach((s) => grid.appendChild(renderSingle(s)));
+    buffer.forEach((s) => grid.appendChild(renderSingle(s)));
     sec.appendChild(grid);
     box.appendChild(sec);
-  }
+    buffer = [];
+  };
+  ordered.forEach((o) => {
+    if (o.type === 'single') buffer.push(o.data);
+    else { flush(); box.appendChild(renderGallery(o.data)); }
+  });
+  flush();
 }
 
 function currentSingleSrc(s) {
