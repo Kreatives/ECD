@@ -30,6 +30,29 @@ let manifest = { version: 1, singles: {}, galleries: {} };
 let dirty = false;
 let activePage = null;
 
+/* ---------------- live voorbeeld ---------------- */
+// De preview-iframe laadt de pagina met ?cmspreview=1; cms-loader.js leest dan het
+// (ook niet-opgeslagen) manifest uit sessionStorage i.p.v. /api/manifest.
+const PREVIEW_KEY = 'cms_preview_manifest';
+const previewFrame = $('#preview-frame');
+let previewTimer = null;
+
+function pageUrl(file) { return file === 'index.html' ? '/' : '/' + file.replace(/\.html$/, ''); }
+function writePreviewState() { try { sessionStorage.setItem(PREVIEW_KEY, JSON.stringify(manifest)); } catch (e) {} }
+function reloadPreviewNow() {
+  try { previewFrame.contentWindow.location.reload(); }
+  catch (e) { previewFrame.src = previewFrame.src; }
+}
+function loadPreview(page) {
+  writePreviewState();
+  if (previewFrame) previewFrame.src = pageUrl(page.file) + '?cmspreview=1';
+}
+function refreshPreview() {
+  writePreviewState();
+  if (previewTimer) clearTimeout(previewTimer);
+  previewTimer = setTimeout(reloadPreviewNow, 450);
+}
+
 /* ---------------- auth / boot ---------------- */
 
 async function boot() {
@@ -74,6 +97,9 @@ $('#logout').addEventListener('click', async () => {
   await fetch('/api/admin/logout', { method: 'POST' });
   location.reload();
 });
+
+$('#preview-refresh').addEventListener('click', () => { writePreviewState(); reloadPreviewNow(); });
+$('#preview-open').addEventListener('click', () => { if (activePage) window.open(pageUrl(activePage.file), '_blank'); });
 
 /* ---------------- navigation ---------------- */
 
@@ -159,6 +185,7 @@ async function selectPage(page) {
   try {
     const data = await parsePage(page.file);
     renderEditor(page, data);
+    loadPreview(page);
   } catch (err) {
     box.innerHTML = '<div class="empty">Kon deze pagina niet laden.</div>';
   }
@@ -424,7 +451,7 @@ $('#save').addEventListener('click', async () => {
   }
 });
 
-function setDirty() { dirty = true; $('#save').disabled = false; setStatus('Niet-opgeslagen wijzigingen'); }
+function setDirty() { dirty = true; $('#save').disabled = false; setStatus('Niet-opgeslagen wijzigingen'); refreshPreview(); }
 function setStatus(txt, kind) {
   const s = $('#status');
   s.textContent = txt || '';

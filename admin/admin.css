@@ -4,6 +4,7 @@
   --danger:#c6603f; --ok:#6f8f5a; --radius:12px;
 }
 *{box-sizing:border-box}
+[hidden]{display:none !important}
 html,body{margin:0;height:100%}
 body{
   background:var(--bg); color:var(--ink);
@@ -42,8 +43,8 @@ img,video{display:block;max-width:100%}
 .login__btn{margin-top:4px}
 .login__err{margin:0;color:#e9b4a2;font-size:14px}
 
-/* App layout */
-.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+/* App layout: zijbalk · editor · live voorbeeld */
+.app{display:grid;grid-template-columns:210px minmax(0,1fr) minmax(0,42vw);min-height:100vh}
 .side{
   background:var(--panel);border-right:1px solid var(--line);
   padding:20px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh
@@ -73,6 +74,13 @@ img,video{display:block;max-width:100%}
 .status{font-size:13px;color:var(--ink-dim)}
 .status.is-ok{color:var(--ok)}
 .status.is-err{color:#e9b4a2}
+
+/* Live voorbeeld (rechterkolom) */
+.preview{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;border-left:1px solid var(--line);background:#0a0908}
+.preview__head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.preview__title{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-dim)}
+.preview__actions{display:flex;gap:8px}
+.preview__frame{flex:1;width:100%;border:0;background:#fff}
 
 /* Editor sections */
 .section{margin-bottom:34px}
@@ -108,6 +116,11 @@ img,video{display:block;max-width:100%}
 .empty{color:var(--ink-dim);padding:30px 0}
 .spinner{color:var(--ink-dim);padding:30px 0}
 
+/* Smaller schermen: voorbeeld-kolom verbergen */
+@media (max-width:1200px){
+  .app{grid-template-columns:210px minmax(0,1fr)}
+  .preview{display:none}
+}
 @media (max-width:720px){
   .app{grid-template-columns:1fr}
   .side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center}

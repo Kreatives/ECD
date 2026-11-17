@@ -76,6 +76,18 @@
     });
   }
 
+  // Preview-modus: /admin laadt deze pagina in een iframe met ?cmspreview=1 en zet
+  // het (ook niet-opgeslagen) manifest in sessionStorage. Dan niet /api/manifest gebruiken.
+  function previewManifest() {
+    try {
+      if (new URLSearchParams(location.search).has('cmspreview')) {
+        var raw = sessionStorage.getItem('cms_preview_manifest');
+        if (raw) return JSON.parse(raw);
+      }
+    } catch (e) {}
+    return null;
+  }
+
   function fetchManifest() {
     if (!window.fetch) return Promise.resolve(null);
     var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
@@ -86,8 +98,14 @@
       .then(function (m) { if (timer) clearTimeout(timer); return m; });
   }
 
-  fetchManifest().then(function (m) {
-    try { if (m) applyManifest(m); } catch (e) { /* stil falen, niet de site breken */ }
+  var preview = previewManifest();
+  if (preview) {
+    try { applyManifest(preview); } catch (e) { /* stil falen */ }
     loadMain();
-  });
+  } else {
+    fetchManifest().then(function (m) {
+      try { if (m) applyManifest(m); } catch (e) { /* stil falen, niet de site breken */ }
+      loadMain();
+    });
+  }
 })();

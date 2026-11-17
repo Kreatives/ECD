@@ -40,6 +40,17 @@
       </header>
       <div id="editor" class="editor" aria-busy="false"></div>
     </main>
+
+    <aside class="preview">
+      <div class="preview__head">
+        <span class="preview__title">Live voorbeeld</span>
+        <div class="preview__actions">
+          <button id="preview-open" class="btn btn--sm btn--ghost" type="button">Open ↗</button>
+          <button id="preview-refresh" class="btn btn--sm btn--ghost" type="button">Vernieuwen</button>
+        </div>
+      </div>
+      <iframe id="preview-frame" class="preview__frame" title="Live voorbeeld van de pagina"></iframe>
+    </aside>
   </div>
 
   <!-- Verborgen file-input, hergebruikt voor alle uploads -->
