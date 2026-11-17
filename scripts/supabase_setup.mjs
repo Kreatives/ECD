@@ -18,8 +18,7 @@ if (buckets.some((b) => b.name === 'media')) {
   console.log('Bucket "media" bestaat al.');
 } else {
   const { error } = await sb.storage.createBucket('media', {
-    public: true,
-    fileSizeLimit: '209715200', // 200 MB
+    public: true, // geen fileSizeLimit -> gebruikt de projectlimiet van Supabase
   });
   if (error) { console.error('createBucket fout:', error.message); process.exit(1); }
   console.log('Bucket "media" aangemaakt (public).');
