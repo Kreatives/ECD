@@ -91,7 +91,11 @@ body {
   color: var(--ink);
   background: var(--offwhite);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  /* clip (niet hidden): hidden maakt van body een scroll-container (overflow-y
+     wordt dan auto), en dat breekt position:sticky — o.a. de parallax-CTA die
+     daardoor niet meer bleef hangen. clip knipt horizontale overflow net zo weg
+     zonder scroll-container, dus sticky blijft werken. */
+  overflow-x: clip;
 }
 
 /* Off-white surfaces stay clean. The paper feel comes from the realistic
